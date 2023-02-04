@@ -45,8 +45,8 @@ public class BaseSpawnManager : MonoBehaviour
                 _spawnedObject.transform.position = _hits[0].pose.position;
             
 
-            if (Input.GetTouch(0).phase == TouchPhase.Ended)
-                _spawnedObject = null;
+            //if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            //    _spawnedObject = null;
         }
     }
 
