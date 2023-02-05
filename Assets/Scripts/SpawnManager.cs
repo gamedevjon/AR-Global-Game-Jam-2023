@@ -7,7 +7,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] GameObject _enemyPrefab;
     Transform[] _areaSpawnPoints;
     bool _isSpawning = false;
-
+    private int _currentWave = 1;
     private static SpawnManager _instance;
     public static SpawnManager Instance { get { return _instance; } }
 
@@ -39,8 +39,11 @@ public class SpawnManager : MonoBehaviour
             Instantiate(_enemyPrefab, _areaSpawnPoints[RNG].position, Quaternion.identity);
             count++;
             yield return new WaitForSeconds(5f);
-            if (count > 5) ActivateSpawn(false);
+            if (count > GetSpawnCount()) ActivateSpawn(false);
         }
+
+        //spawning ended. Increase wave
+        _currentWave++;
     }
 
     [ContextMenu("TestSpawn")]
@@ -48,5 +51,10 @@ public class SpawnManager : MonoBehaviour
     {
         GameObject.FindObjectOfType<HomeBase>().BaseSet();
         ActivateSpawn(true);
+    }
+
+    int GetSpawnCount()
+    {
+        return _currentWave * 5;
     }
 }
