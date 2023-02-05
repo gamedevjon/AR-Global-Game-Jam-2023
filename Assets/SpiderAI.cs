@@ -8,6 +8,7 @@ public class SpiderAI : MonoBehaviour
     private float _speed = 5.0f;
     [SerializeField]
     private Transform _target;
+    private Transform _defaultTarget;
    
     private enum SpiderState
     {
@@ -29,6 +30,7 @@ public class SpiderAI : MonoBehaviour
         _anim = GetComponentInChildren<Animator>();
         _currentState = SpiderState.Walk;
         _anim.Play("Walk");
+        _defaultTarget = GameObject.Find("Stash").GetComponent<Transform>();
     }
 
     // Update is called once per frame
@@ -42,6 +44,8 @@ public class SpiderAI : MonoBehaviour
             case SpiderState.Idle:
                 break;
             case SpiderState.Walk:
+                if (_target == null)
+                    _target = _defaultTarget;
 
                 transform.LookAt(_target.position);
                 transform.Translate(Vector3.forward * _speed * Time.deltaTime);

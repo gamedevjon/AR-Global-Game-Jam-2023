@@ -11,6 +11,7 @@ public class HomeBase : MonoBehaviour
     BaseSpawnManager _baseManager;
     ARPlaneManager _planeManager;
     [SerializeField] GameObject[] _playAreas;
+    int _activePlayArea = 0;
 
     private void Start()
     {
@@ -25,7 +26,8 @@ public class HomeBase : MonoBehaviour
         {
             area.SetActive(false);
         }
-        _playAreas[(int)slider.value].SetActive(true);
+        _activePlayArea = (int)slider.value;
+        _playAreas[_activePlayArea].SetActive(true);
     }
 
     public void BaseSet()
@@ -33,5 +35,13 @@ public class HomeBase : MonoBehaviour
         _baseManager.enabled = false;
         _planeManager.SetTrackablesActive(false);
         UIManager.Instance.DisplayHomeBasUI(false);
+        List<Transform> spawnList = new List<Transform>();
+        foreach(Transform child in transform.GetChild(_activePlayArea).GetComponentsInChildren<Transform>())
+        {
+            if (child.TryGetComponent<Renderer>(out Renderer render)) continue;
+            spawnList.Add(child);
+        }
+
+        SpawnManager.Instance.GatherSpawnPoints(spawnList.ToArray());
     }
 }
