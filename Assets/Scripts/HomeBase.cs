@@ -11,13 +11,14 @@ public class HomeBase : MonoBehaviour
     BaseSpawnManager _baseManager;
     ARPlaneManager _planeManager;
     [SerializeField] GameObject[] _playAreas;
-    int _activePlayArea = 0;
+    [SerializeField] int _activePlayArea = 0;
 
     private void Start()
     {
         _arSessionOrigin = GameObject.Find("AR Session Origin");
         _baseManager = _arSessionOrigin.GetComponent<BaseSpawnManager>();
         _planeManager = _arSessionOrigin.GetComponent<ARPlaneManager>();
+        
     }
 
     public void SetPlayArea(Slider slider)

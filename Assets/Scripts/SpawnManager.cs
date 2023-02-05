@@ -35,10 +35,10 @@ public class SpawnManager : MonoBehaviour
         int count = 0;
         while(_isSpawning) 
         {
-            yield return new WaitForSeconds(5f);
             int RNG = Random.Range(0, _areaSpawnPoints.Length);
             Instantiate(_enemyPrefab, _areaSpawnPoints[RNG].position, Quaternion.identity);
             count++;
+            yield return new WaitForSeconds(5f);
             if (count > 5) ActivateSpawn(false);
         }
     }
@@ -46,6 +46,7 @@ public class SpawnManager : MonoBehaviour
     [ContextMenu("TestSpawn")]
     public void TestSpawn()
     {
+        GameObject.FindAnyObjectByType<HomeBase>().BaseSet();
         ActivateSpawn(true);
     }
 }
