@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6243332559026404477}
+  - component: {fileID: 588398712184146975}
+  - component: {fileID: 2953527011598951691}
   m_Layer: 0
   m_Name: Tower1
   m_TagString: Untagged
@@ -32,6 +34,41 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &588398712184146975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7307752834695490359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3078b26fa03472f4ab10a31c7a8adf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  targetDist: 0
+  lookTag: Enemy
+  lookSpeed: 5
+  lookDist: 2
+--- !u!114 &2953527011598951691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7307752834695490359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94bfc1f9366939e4bbe3ee218c666dfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 7019693459892780631, guid: 4a5a46410f83ac4428f3b1368d66734b,
+    type: 3}
+  fireDist: 1.5
+  T: 2
+  B: 5
+  BT: 0.1
 --- !u!1001 &6783621199100398847
 PrefabInstance:
   m_ObjectHideFlags: 0

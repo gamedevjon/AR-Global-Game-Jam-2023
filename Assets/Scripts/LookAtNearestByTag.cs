@@ -6,6 +6,7 @@ public class LookAtNearestByTag : MonoBehaviour
 {
 
     public GameObject target;
+    public float targetDist = 0f;
     public string lookTag = "Enemy";
     public float lookSpeed = 5f;
     public float lookDist = 2f;
@@ -33,6 +34,7 @@ public class LookAtNearestByTag : MonoBehaviour
                 {
                     distNearest = dist;
                     target = candidate;
+                    targetDist = dist;
                 }
             }
         }
