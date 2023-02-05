@@ -387,6 +387,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 106064184}
   m_CullTransparentMesh: 1
+--- !u!1 &191957097 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6918294605343084863, guid: 385272820dd4f8d4982178f0c91f1196,
+    type: 3}
+  m_PrefabInstance: {fileID: 439458585}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &191957100
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191957097}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.73
+  m_Center: {x: 0, y: 1.08, z: 0}
 --- !u!1 &356616366
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,8 +796,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6918294605343084862, guid: 385272820dd4f8d4982178f0c91f1196,
         type: 3}
+      propertyPath: _health
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6918294605343084862, guid: 385272820dd4f8d4982178f0c91f1196,
+        type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6918294605343084863, guid: 385272820dd4f8d4982178f0c91f1196,
         type: 3}

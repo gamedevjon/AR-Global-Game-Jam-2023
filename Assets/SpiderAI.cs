@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpiderAI : MonoBehaviour
+public class SpiderAI : MonoBehaviour, IDamagable
 {
     [SerializeField]
     private float _speed = 5.0f;
@@ -17,7 +17,8 @@ public class SpiderAI : MonoBehaviour
     private Collider[] _hits = new Collider[10];
     [SerializeField]
     private LayerMask _detectionLayers;
-   
+    [SerializeField]
+    private int _health = 100;
     private enum SpiderState
     {
         Idle,
@@ -33,6 +34,10 @@ public class SpiderAI : MonoBehaviour
     [SerializeField]
     private float _attackDelay = 3.0f;
     private Animator _anim;
+    private bool _isDead = false;
+
+    public int Health { get => _health; set => _health = value; }
+
     private void Start()
     {
         _anim = GetComponentInChildren<Animator>();
@@ -49,7 +54,9 @@ public class SpiderAI : MonoBehaviour
         {
             case SpiderState.Idle:
                 break;
-            case SpiderState.Walk:                
+            case SpiderState.Walk:
+                if (_target == null)
+                    return;
 
                 transform.LookAt(_target.position);
                 transform.Translate(Vector3.forward * _speed * Time.deltaTime);
@@ -74,6 +81,16 @@ public class SpiderAI : MonoBehaviour
 
                 break;
             case SpiderState.Die:
+                
+                if (_isDead == false)
+                {
+                    _isDead = true;
+                    _anim.SetTrigger("Dead");
+                    Destroy(this.gameObject, 5.0f);
+                }
+
+
+
                 break;
         }
     }
@@ -109,5 +126,18 @@ public class SpiderAI : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _searchRadius);
+    }
+
+    public void Damage(int DamageAmount)
+    {
+        Health -= DamageAmount;
+
+        if (Health < 1)
+            _currentState = SpiderState.Die;
+    }
+
+    public void OnDefeat()
+    {
+        throw new NotImplementedException();
     }
 }

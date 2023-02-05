@@ -95,7 +95,11 @@ public class LookAtNearestByTag : MonoBehaviour, IDamagable
             float distance = Vector3.Magnitude(target.transform.position - transform.position);
             if  (distance <= _attackRadius && !_isFiring && Time.time > _canFire)
             {
-                StartCoroutine(BurstFire());
+                //check if target is actually alive still 
+                var validTarget = target.GetComponent<IDamagable>()?.Health > 0;
+
+                if (validTarget)
+                    StartCoroutine(BurstFire());
             }
 
         }
@@ -114,6 +118,7 @@ public class LookAtNearestByTag : MonoBehaviour, IDamagable
            
 
             Instantiate(_bulletPrefab, transform.position, Quaternion.LookRotation(direction));
+
         }
         _canFire = Time.time + _attackTime;
 

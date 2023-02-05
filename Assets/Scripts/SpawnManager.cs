@@ -46,7 +46,7 @@ public class SpawnManager : MonoBehaviour
     [ContextMenu("TestSpawn")]
     public void TestSpawn()
     {
-        GameObject.FindAnyObjectByType<HomeBase>().BaseSet();
+        GameObject.FindObjectOfType<HomeBase>().BaseSet();
         ActivateSpawn(true);
     }
 }
