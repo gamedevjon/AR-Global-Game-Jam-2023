@@ -39,6 +39,11 @@ public class UIManager : MonoBehaviour
        _homeBaseUI.SetActive(isOn);
     }
 
+    public void DisplayPlanterButtons(bool isOn)
+    {
+        _placeButtonsHolder.SetActive(isOn);
+    }
+
     [ContextMenu("TestLoad")]
     public void SetHome()
     {
