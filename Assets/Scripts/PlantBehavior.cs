@@ -16,7 +16,7 @@ public class PlantBehavior : MonoBehaviour, IDamagable
 
     private void Start()
     {
-        
+        _healthBarCanvas.GetComponent<Canvas>().worldCamera = Camera.main;
         _healthSlider = _healthBarCanvas.GetComponentInChildren<Slider>();
         Health = _health;
         _healthSlider.maxValue = _health;

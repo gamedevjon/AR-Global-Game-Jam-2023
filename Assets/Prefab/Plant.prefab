@@ -330,7 +330,7 @@ MonoBehaviour:
   _leafs: {fileID: 5285346486739993457}
   _fruit: {fileID: 9206269823549199377}
   _healthBarCanvas: {fileID: 5450373557453763995}
-  _health: 0
+  _health: 5
 --- !u!1 &9206269823549199377
 GameObject:
   m_ObjectHideFlags: 0
