@@ -52,6 +52,7 @@ public class BaseSpawnManager : MonoBehaviour
 
     private void SpawnPrefab(Vector3 spawnPosistion)
     {
-        _spawnedObject = Instantiate(_spawnableBasePrefab, spawnPosistion, Quaternion.identity);    
+        _spawnedObject = Instantiate(_spawnableBasePrefab, spawnPosistion, Quaternion.identity);
+        UIManager.Instance.HomeBase(_spawnedObject.GetComponent<HomeBase>());
     }
 }
