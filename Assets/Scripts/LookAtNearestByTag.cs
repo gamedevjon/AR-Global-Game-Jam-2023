@@ -21,7 +21,7 @@ public class LookAtNearestByTag : MonoBehaviour, IDamagable
     Quaternion targetRotation;
     float _canFire = -1;
 
-    public int Health { get; set; }
+    public int Health { get => _maxHealth; set => _maxHealth = value; }
 
     public void Damage(int DamageAmount)
     {

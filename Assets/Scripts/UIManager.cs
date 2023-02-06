@@ -6,9 +6,11 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] GameObject _placeButtonsHolder,_homeBaseUI;
+    [SerializeField] GameObject _placeButtonsHolder, _homeBaseUI;
     [SerializeField] Slider _homeBaseSizeSlider;
     [SerializeField] Button _homeSetButton;
+    [SerializeField] TMP_Text _coinText;
+
 
 
     private static UIManager _instance;
@@ -23,7 +25,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        if (_placeButtonsHolder.activeInHierarchy) 
+        if (_placeButtonsHolder.activeInHierarchy)
             _placeButtonsHolder.SetActive(false);
     }
 
@@ -33,15 +35,20 @@ public class UIManager : MonoBehaviour
         _homeBaseSizeSlider.onValueChanged.AddListener(x => { homeBase.SetPlayArea(_homeBaseSizeSlider); });
         _homeSetButton.onClick.AddListener(homeBase.BaseSet);
     }
-    
+
     public void DisplayHomeBasUI(bool isOn)
     {
-       _homeBaseUI.SetActive(isOn);
+        _homeBaseUI.SetActive(isOn);
     }
 
     public void DisplayPlanterButtons(bool isOn)
     {
         _placeButtonsHolder.SetActive(isOn);
+    }
+
+    public void UpdateCoins(int coins)
+    {
+        _coinText.text = coins.ToString();
     }
 
     [ContextMenu("TestLoad")]

@@ -8,6 +8,7 @@ public class SpawnManager : MonoBehaviour
     Transform[] _areaSpawnPoints;
     bool _isSpawning = false;
     private int _currentWave = 1;
+    private int _enemyCount = 0;
     private static SpawnManager _instance;
     public static SpawnManager Instance { get { return _instance; } }
 
@@ -38,8 +39,9 @@ public class SpawnManager : MonoBehaviour
             int RNG = Random.Range(0, _areaSpawnPoints.Length);
             Instantiate(_enemyPrefab, _areaSpawnPoints[RNG].position, Quaternion.identity);
             count++;
-            yield return new WaitForSeconds(5f);
+            _enemyCount++;            
             if (count > GetSpawnCount()) ActivateSpawn(false);
+            yield return new WaitForSeconds(5f);
         }
 
         //spawning ended. Increase wave
@@ -51,6 +53,15 @@ public class SpawnManager : MonoBehaviour
     {
         GameObject.FindObjectOfType<HomeBase>().BaseSet();
         ActivateSpawn(true);
+    }
+
+    public void KillEnemy()
+    {
+        _enemyCount--;
+        if (!_isSpawning && _enemyCount == 0)
+        {
+            GameManager.Instance.WaveComplete();
+        }
     }
 
     int GetSpawnCount()

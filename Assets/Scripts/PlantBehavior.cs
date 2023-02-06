@@ -5,14 +5,18 @@ using UnityEngine.UI;
 
 public class PlantBehavior : MonoBehaviour, IDamagable
 {
-    public int Health { get; set; }
-
     [SerializeField] float _deathCoolDownTime;
     [SerializeField] GameObject _leafs, _fruit, _healthBarCanvas;
     Slider _healthSlider;
 
     [SerializeField] int _health;
 
+    public int Health { get => _health; set => _health = value; }
+
+    private void OnEnable()
+    {
+        GameManager.onWaveComplete += CashGenerate;
+    }
 
     private void Start()
     {
@@ -43,14 +47,6 @@ public class PlantBehavior : MonoBehaviour, IDamagable
         StartCoroutine(DeathCooldown());
     }
 
-    
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     IEnumerator DeathCooldown()
     {
         float deathCountDown = _deathCoolDownTime;
@@ -62,9 +58,19 @@ public class PlantBehavior : MonoBehaviour, IDamagable
         Destroy(this.gameObject);
     }
 
+    private void CashGenerate()
+    {
+        GameManager.Instance.AddCash();
+    }
+
     [ContextMenu("HitTest")]
     public void HitTest()
     {
         Damage(1);
+    }
+
+    private void OnDisable()
+    {
+        GameManager.onWaveComplete += CashGenerate;
     }
 }

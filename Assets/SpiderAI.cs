@@ -1,7 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpiderAI : MonoBehaviour, IDamagable
 {
@@ -19,6 +18,10 @@ public class SpiderAI : MonoBehaviour, IDamagable
     private LayerMask _detectionLayers;
     [SerializeField]
     private int _health = 100;
+    [SerializeField]
+    private GameObject _healthBarCanvas;
+    private Slider _healthSlider;
+
     private enum SpiderState
     {
         Idle,
@@ -36,10 +39,15 @@ public class SpiderAI : MonoBehaviour, IDamagable
     private Animator _anim;
     private bool _isDead = false;
 
-    public int Health { get => _health; set => _health = value; }
+    public int Health { get=>_health; set => _health = value; }
 
     private void Start()
     {
+        _healthBarCanvas.GetComponent<Canvas>().worldCamera = Camera.main;
+        _healthSlider = _healthBarCanvas.GetComponentInChildren<Slider>();
+        Health = _health;
+        _healthSlider.maxValue = _health;
+        _healthSlider.value = _health;
         _anim = GetComponentInChildren<Animator>();
         _currentState = SpiderState.Walk;
         _anim.Play("Walk");
@@ -74,9 +82,17 @@ public class SpiderAI : MonoBehaviour, IDamagable
             case SpiderState.Attack:
                 
                 if (Time.time > _canAttack)
-                {
-                    _canAttack = Time.time + _attackDelay;
-                    _anim.SetTrigger("Attack");
+                {//check if target is actually alive still 
+                    var validTarget = _target.GetComponent<IDamagable>()?.Health > 0;
+
+                    if (validTarget)
+                    {
+                        _target.GetComponent<IDamagable>().Damage(1);
+                        _canAttack = Time.time + _attackDelay;
+                        _anim.SetTrigger("Attack");
+                    }
+                    else
+                        SearchForTarget();
                 }
 
                 break;
@@ -99,7 +115,7 @@ public class SpiderAI : MonoBehaviour, IDamagable
     {
         Physics.OverlapSphereNonAlloc(transform.position, _searchRadius, _hits, _detectionLayers, QueryTriggerInteraction.Collide);
 
-        _target =FindClosestTarget();
+        _target = FindClosestTarget();
     }
 
     private Transform FindClosestTarget()
@@ -108,8 +124,9 @@ public class SpiderAI : MonoBehaviour, IDamagable
         Transform closestTarget = null;
         foreach(Collider hit in _hits)
         {
-            if (hit == null) continue;
-
+            
+            if (hit == null || !hit.transform.CompareTag("Plant")) continue;
+            if (hit.transform == this) continue;
             float distance = Vector3.Magnitude(hit.transform.position - transform.position);
             if (distance < closestDistance) 
             {
@@ -130,10 +147,24 @@ public class SpiderAI : MonoBehaviour, IDamagable
 
     public void Damage(int DamageAmount)
     {
+        Debug.Log("Hit");
+
+        if (!_healthBarCanvas.activeInHierarchy)
+            _healthBarCanvas.SetActive(true);
+
+        Health -= DamageAmount;
+        _healthSlider.SetValueWithoutNotify(Health);
+
         Health -= DamageAmount;
 
         if (Health < 1)
+        {
             _currentState = SpiderState.Die;
+            GameManager.Instance.AddScore(1);
+            SpawnManager.Instance.KillEnemy();
+        }
+
+        SearchForTarget();
     }
 
     public void OnDefeat()

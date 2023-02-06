@@ -26,6 +26,6 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.CompareTag("Enemy"))
-            other.GetComponent<IDamagable>()?.Damage(1);
+            other.GetComponent<IDamagable>()?.Damage(5);
     }
 }
