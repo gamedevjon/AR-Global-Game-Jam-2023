@@ -5,13 +5,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 
-public class HomeBase : MonoBehaviour
+public class HomeBase : MonoBehaviour, IDamagable
 {
     GameObject _arSessionOrigin;
     BaseSpawnManager _baseManager;
     ARPlaneManager _planeManager;
     [SerializeField] GameObject[] _playAreas;
     [SerializeField] int _activePlayArea = 0;
+    [SerializeField] GameObject _healthBarCanvas;
+    Slider _healthSlider;
+    [SerializeField] private int _health;
+
+    public int Health { get => _health; set => _health = value; }
 
     private void Start()
     {
@@ -44,5 +49,22 @@ public class HomeBase : MonoBehaviour
         }
 
         SpawnManager.Instance.GatherSpawnPoints(spawnList.ToArray());
+    }
+
+    public void Damage(int DamageAmount)
+    {
+        if (!_healthBarCanvas.activeInHierarchy)
+            _healthBarCanvas.SetActive(true);
+
+        Health -= DamageAmount;
+        _healthSlider.SetValueWithoutNotify(Health);
+
+        if (Health <= 0)
+            OnDefeat();
+    }
+
+    public void OnDefeat()
+    {
+        UIManager.Instance.GameOverScreen();
     }
 }

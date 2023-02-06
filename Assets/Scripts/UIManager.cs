@@ -6,10 +6,11 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] GameObject _placeButtonsHolder, _homeBaseUI;
+    [SerializeField] GameObject _placeButtonsHolder, _homeBaseUI, _gameOverUI;
     [SerializeField] Slider _homeBaseSizeSlider;
     [SerializeField] Button _homeSetButton;
     [SerializeField] TMP_Text _coinText;
+    [SerializeField] TMP_Text _killText;
 
 
 
@@ -49,6 +50,16 @@ public class UIManager : MonoBehaviour
     public void UpdateCoins(int coins)
     {
         _coinText.text = coins.ToString();
+    }
+
+    public void UpdateKillCount()
+    {
+        _killText.text = $"Total Spiders Killed: {GameManager.Instance.GetScore()}";
+    }
+
+    public void GameOverScreen()
+    {
+        _gameOverUI.SetActive(true);
     }
 
     [ContextMenu("TestLoad")]

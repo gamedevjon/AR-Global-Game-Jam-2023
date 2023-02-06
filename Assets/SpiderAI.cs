@@ -162,6 +162,7 @@ public class SpiderAI : MonoBehaviour, IDamagable
             _currentState = SpiderState.Die;
             GameManager.Instance.AddScore(1);
             SpawnManager.Instance.KillEnemy();
+            UIManager.Instance.UpdateKillCount();
         }
 
         SearchForTarget();
